@@ -35,6 +35,7 @@ class _UserPortfolioScreenState extends State<UserPortfolioScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16.0),
           ),
+          SizedBox(width: 100,),
           SizedBox(height: 30,
           width: 30,
           child: CircularProgressIndicator(),

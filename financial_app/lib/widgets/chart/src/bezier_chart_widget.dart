@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:animate_do/animate_do.dart';
 import 'package:financial_app/utils/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -793,70 +794,73 @@ class BezierChartState extends State<BezierChart> with SingleTickerProviderState
                                   );
                                 }),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 10),
-                            child: Align(
-                              alignment: const Alignment(0.0, 0.7),
-                              child: CustomPaint(
-                                size: Size(
-                                  _contentWidth,
-                                  maxHeight,
-                                ),
-                                painter: _BezierChartPainter(
-                                  shouldRepaintChart: areSeriesDifferent,
-                                  config: widget.config,
-                                  maxYValue: _yValues!.last,
-                                  minYValue: _yValues!.first,
-                                  bezierChartScale: _currentBezierChartScale,
-                                  verticalIndicatorPosition: _verticalIndicatorPosition,
-                                  series: computedSeries,
-                                  showIndicator: _displayIndicator,
-                                  animation: CurvedAnimation(
-                                    parent: _animationController,
-                                    curve: Interval(
-                                      0.0,
-                                      1.0,
-                                      curve: Curves.bounceInOut,
-                                    ),
+                          FadeInLeft(
+                            duration: const Duration(milliseconds: 1000),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 10),
+                              child: Align(
+                                alignment: const Alignment(0.0, 0.7),
+                                child: CustomPaint(
+                                  size: Size(
+                                    _contentWidth,
+                                    maxHeight,
                                   ),
-                                  xAxisDataPoints: _xAxisDataPoints,
-                                  onDataPointSnap: _onDataPointSnap,
-                                  maxWidth: MediaQuery.of(context).size.width,
-                                  scrollOffset: _scrollController!.hasClients ? _scrollController!.offset : 0.0,
-                                  footerValueBuilder: widget.footerValueBuilder,
-                                  bubbleLabelValueBuilder: widget.bubbleLabelValueBuilder,
-                                  footerDateTimeBuilder: widget.footerDateTimeBuilder,
-                                  bubbleLabelDateTimeBuilder: widget.bubbleLabelDateTimeBuilder,
-                                  onValueSelected: (val) {
-                                    print("Selection at valuee $val");
-                                    if (widget.onValueSelected != null) {
-                                      if (_valueSelected == null) {
-                                        _valueSelected = val;
-                                        widget.onValueSelected!(_valueSelected);
-                                      } else {
-                                        if (_valueSelected != val) {
+                                  painter: _BezierChartPainter(
+                                    shouldRepaintChart: areSeriesDifferent,
+                                    config: widget.config,
+                                    maxYValue: _yValues!.last,
+                                    minYValue: _yValues!.first,
+                                    bezierChartScale: _currentBezierChartScale,
+                                    verticalIndicatorPosition: _verticalIndicatorPosition,
+                                    series: computedSeries,
+                                    showIndicator: _displayIndicator,
+                                    animation: CurvedAnimation(
+                                      parent: _animationController,
+                                      curve: Interval(
+                                        0.0,
+                                        1.0,
+                                        curve: Curves.bounceInOut,
+                                      ),
+                                    ),
+                                    xAxisDataPoints: _xAxisDataPoints,
+                                    onDataPointSnap: _onDataPointSnap,
+                                    maxWidth: MediaQuery.of(context).size.width,
+                                    scrollOffset: _scrollController!.hasClients ? _scrollController!.offset : 0.0,
+                                    footerValueBuilder: widget.footerValueBuilder,
+                                    bubbleLabelValueBuilder: widget.bubbleLabelValueBuilder,
+                                    footerDateTimeBuilder: widget.footerDateTimeBuilder,
+                                    bubbleLabelDateTimeBuilder: widget.bubbleLabelDateTimeBuilder,
+                                    onValueSelected: (val) {
+                                      print("Selection at valuee $val");
+                                      if (widget.onValueSelected != null) {
+                                        if (_valueSelected == null) {
                                           _valueSelected = val;
                                           widget.onValueSelected!(_valueSelected);
+                                        } else {
+                                          if (_valueSelected != val) {
+                                            _valueSelected = val;
+                                            widget.onValueSelected!(_valueSelected);
+                                          }
                                         }
                                       }
-                                    }
-                                  },
-                                  onDateTimeSelected: (val) {
-                                    selectedMonth = val?.month ?? 0;
-                                    if (widget.onDateTimeSelected != null) {
-                                      if (_dateTimeSelected == null) {
-                                        _dateTimeSelected = val;
-                                        widget.onDateTimeSelected!(_dateTimeSelected);
-                                        WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {}));
-                                      } else {
-                                        if (_dateTimeSelected != val) {
+                                    },
+                                    onDateTimeSelected: (val) {
+                                      selectedMonth = val?.month ?? 0;
+                                      if (widget.onDateTimeSelected != null) {
+                                        if (_dateTimeSelected == null) {
                                           _dateTimeSelected = val;
                                           widget.onDateTimeSelected!(_dateTimeSelected);
                                           WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {}));
+                                        } else {
+                                          if (_dateTimeSelected != val) {
+                                            _dateTimeSelected = val;
+                                            widget.onDateTimeSelected!(_dateTimeSelected);
+                                            WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {}));
+                                          }
                                         }
                                       }
-                                    }
-                                  },
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
